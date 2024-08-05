@@ -1,0 +1,23 @@
+SELECT 
+'Open' as "Status",
+true as "Is Bacon",
+[H-CUST-NBR] as "Customer",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-JOB#])+':'+TRIM([R-RELEASE-NBR]) as "Item Id",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-')) as "Order",
+ISNULL([R-DUE-QTY],0) as "Quantity",
+[R-JOB#] as "Eng Part",
+[R-JOB#] as "Item",ISNULL([R-COST],0) as "Unit Price",ISNULL([R-LOT-PRICE],0) as "Lot Price", ISNULL([R-TOOL-COST],0) as "NRE",
+[R-DUE-DATE] as "Ship Date",
+[R-SHIP-VIA] as "Ship Via",[R-SHIP-ID] as "Bacon - Ship Address Index",[R-REMARKS2] as "Notes",
+[R-PO-LINE-NBR] as "PO Line Num",[RecordCreateDateTime] as "Created At",TRIM([R-QUOTE-NBR]) as "Quote",
+IIF([R-LOT-PRICE]>0,'Lot Price','Unit Price') as "Price Type",[R-TURN-TIME] as "Lead Time",
+[R-MP-STATUS] as "Bacon - MP Status",[R-PRIORITY] as "Bacon - Priority"
+FROM RELEASE
+LEFT JOIN HEADER ON [R-JOB#]=[H-JOB#]
+WHERE 
+[R-DUE-DATE]>='2022-01-01'
+AND ([R-STATUS]='NEW' OR [R-STATUS]='REPEAT')
+
+//NRE Cost
+ //[R-PARENT-CHILD-FLAG]
+ //customer part num

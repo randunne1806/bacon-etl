@@ -1,0 +1,11 @@
+SELECT QHEADER.[Quote Nbr] as "Quote Num",[Customer Nbr] as "Customer",
+[Date] as "Quote Date",
+ISNULL([Job Nbr],[Customer Nbr]+':'+TRIM([Part Nbr])+':'+TRIM(ISNULL(Revision,''))) as "Eng Part",
+[Terms],'Open' as "Status"
+ FROM QHEADER
+INNER JOIN QHEAD2 ON QHEADER.[Quote NBR]=QHEAD2.[Quote NBR]
+WHERE [DATE]>'2/14/2022'
+//AND [PO Nbr] IS NOT NULL
+//[PO Nbr] as "PO Num",[Job Nbr] as "Eng Part",[Terms],[PO Date]
+//[Slmn 1] as "CS Person",[Slmn 2] as "Sales Manager",[Slmn 3] as "Sales Rep",
+//[Part Nbr] as "Part Num",Revision as "Part Revision",

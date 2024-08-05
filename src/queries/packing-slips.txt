@@ -1,0 +1,9 @@
+SELECT [Packing Slip Nbr] as "Shipment Num",[Packing_Slip_Date] as "Shipment Date",
+'Customer' as Type,[Cust_Nbr] as "Customer",
+IIF([Ship_VIA] IS NULL,'UNKNOWN',[Ship_VIA]) as "Ship Via",
+[Cust_Nbr]+':'+TRIM([Ship_To3])+':'+ISNULL(Ship_ToState,'-')+'' as "Ship Address",
+[Shipper-Number] as "Shipper Account Num",
+[Po_Nbr] as "PO Num",
+'Confirmed' as "Status"
+FROM PSHEADER
+WHERE [Packing_Slip_Date]>='1/1/2022' AND [Cust_Nbr] IS NOT NULL

@@ -1,0 +1,13 @@
+SELECT 
+QHEADER.[Quote Nbr] as "Quote Num",
+[Customer Nbr] as "Customer Code",
+[Date] as "Quote Date",
+[Part Nbr] as "Part Num",
+[Revision] as "Part Revision",
+[Nbr of Layers] as "Layers",
+[Slmn 1] as "CS Person",[Slmn 2] as "Sales Manager",[Slmn 3] as "Sales Rep",
+[Job Nbr] as "Eng Part Num",
+[PO Nbr] as "PO Num",[PO Date]
+FROM QHEADER
+INNER JOIN QHEAD2 ON QHEADER.[Quote NBR]=QHEAD2.[Quote NBR]
+WHERE [DATE]>'2/14/2022'

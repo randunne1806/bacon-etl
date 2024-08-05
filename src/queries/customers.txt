@@ -1,0 +1,10 @@
+SELECT 
+true as "Is Bacon",
+[Customer-nbr] as "Customer Code",[H-CUST] as "Customer Name",[Credit-limit] as "Credit Limit",
+[H-SLMN#] as "Primary CS Person",[H-SLMN#2] as "Sales Manager",[H-SLMN#3] as "Sales Rep 1",[H-SLMN#4] as "Sales Rep 2",
+[SHIP-VIA] as "Default Ship Via",[Shipper-Number] as "Shipping Account",[Terms],[CustMemo1] as "Notes",
+[AccountingEmail] as "Accounting Email",
+'Active' as "Status",[Phone-number] as "Phone",
+IIF([Bill-street-1] IS NOT NULL AND [Ship-street-1]<>[Bill-street-1],[Customer-nbr]+':'+TRIM([Bill-street-1])+':'+[Bill-zip]+'',IIF([Ship-street-1] IS NOT NULL,[Customer-nbr]+':'+TRIM([Ship-street-1])+':'+[Ship-zip]+'',NULL)) as "Default Billing Address",
+IIF([Ship-street-1] IS NOT NULL,[Customer-nbr]+':'+TRIM([Ship-street-1])+':'+[Ship-zip]+'',NULL) as "Default Shipping Address"
+ FROM CUST

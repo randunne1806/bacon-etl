@@ -1,0 +1,14 @@
+SELECT 
+[Customer Nbr]+':'+TRIM([Part Nbr])+':'+TRIM(ISNULL(Revision,'')) as "Eng Part Num",
+MAX([Part Nbr]) as "Customer Part",MAX(Revision) as "Customer Part Revision",MAX([Customer Nbr]) as "Customer",MIN([Date]) as "Created At",
+'Quoted' as "Status",MAX([Nbr of Layers]) as "Layers",MAX([Length-inches]) as "Board Height",MAX([Width-inches]) as "Board Width",
+MAX([Material Thickness]) as "Overall Thickness",MAX([Array length]) as "Array Height",MAX([Array width]) as "Array Width",
+MAX([Boards per Array]) as "Boards Per Array",
+MAX([Finish]) as "Surface Finish",MAX([Soldermask-color]) as "Soldermask Color",MAX([Legend-color]) as "Legend Color",
+MAX([Test-type]) as "ET Test Type",MAX([Soldermask-sides]) as "Soldermask Side",
+MAX([Legend-sides]) as "Legend Sides"
+FROM QHEADER
+INNER JOIN QHEAD2 ON QHEADER.[Quote NBR]=QHEAD2.[Quote NBR]
+WHERE [DATE]>'2/14/2022'
+AND [Job Nbr] IS NULL AND [Customer Nbr]+':'+TRIM([Part Nbr])+':'+TRIM(ISNULL(Revision,'')) iS not null
+GROUP BY [Customer Nbr]+':'+TRIM([Part Nbr])+':'+TRIM(ISNULL(Revision,''))

@@ -1,0 +1,23 @@
+SELECT 
+[MRB-DR-NUMBER] as "MRB Num",
+[MRB-DATE] as "Log Date",
+[MRB-HEADER-JOB-NBR] as "Eng Part",
+[MRB-REJECT-QTY] as "Quantity",
+[MRB-ACTUAL-QTY-AT-REJECT] as "Actual Quantity",
+[MRB-SCRAP-QTY] as "Scrap Quantity",
+[MRB-DISPOSITION-DATE] as "Closed At",
+[MRB-PARENT-JOB-NBR] as "Bacon - Release Num",
+[MRB-JOB-NBR] as "Bacon - MRB Release Num",
+[MRB-REJECT-CODE] as "Scrap Code",
+[RESPONSIBLE-GATE] as "Activity Center",
+[COMMENTS] as "Notes",
+IIF([DISPOSITION-STATUS]='D','Closed','Open') as "Status",
+[H-CUST-NBR] as "Customer",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-')) as "Order",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-JOB#])+':'+TRIM([R-TRACKING-NBR])+'' as "Order Release",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-JOB#])+':'+TRIM([R-RELEASE-NBR]) as "Order Item",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-TRACKING-NBR])+'' as "Work Order",
+[R-JOB#] as "Item"
+FROM MRB INNER JOIN
+[RELEASE] ON [MRB-JOB-NBR]=[R-TRACKING-NBR]
+LEFT JOIN HEADER ON [R-JOB#]=[H-JOB#]

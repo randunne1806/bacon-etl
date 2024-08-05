@@ -1,0 +1,3 @@
+SELECT [PoNbr] as "PO Num",[PoDate] as "PO Date",VendorId as "Vendor",Notes,Status as "Bacon Status",
+ DateRequired as "Due Date", ShipVia as "Ship Method", Terms,Department,'VIRA' as "Buyer",'Open' as "Status"
+FROM POHEADER WHERE [PODate]>='02/14/2022'

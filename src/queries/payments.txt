@@ -1,0 +1,8 @@
+SELECT (CAST([Invoice Number] as SQL_VARCHAR)+':'+CAST([Transaction Date] as SQL_VARCHAR)+':'+CAST([Transaction Time] as SQL_VARCHAR)) as "Item Id",
+[Payment Date],[Payment Amount]+[Discount Amount] as "Total",
+[Check Number] as "Ref Num",
+[PaymentMethod] as "Type",
+PAYMENTS.RecordCreateUser as "Created By",
+IHEADER.[Customer-Nbr] as "Customer",'Open' as "Status",true as "Is Bacon"
+ FROM PAYMENTS INNER JOIN
+ IHEADER ON [PAYMENTS].[Invoice Number]=IHEADER.[Invoice/Packing Slip #]

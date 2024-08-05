@@ -1,0 +1,7 @@
+SELECT (CAST([Invoice Number] as SQL_VARCHAR)+':'+CAST([Transaction Date] as SQL_VARCHAR)+':'+CAST([Transaction Time] as SQL_VARCHAR)) as "Item Id",
+(CAST([Invoice Number] as SQL_VARCHAR)+':'+CAST([Transaction Date] as SQL_VARCHAR)+':'+CAST([Transaction Time] as SQL_VARCHAR)) as "Customer Payment",
+[Invoice Number] as "Invoice",
+[Payment Amount] as "Payment Amount",
+[Discount Amount] as "Discount Taken",
+[Payment Amount]+[Discount Amount] as "Total",'Open' as "Status",true as "Is Bacon"
+ FROM PAYMENTS

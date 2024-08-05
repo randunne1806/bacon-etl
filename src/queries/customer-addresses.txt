@@ -1,0 +1,22 @@
+SELECT [Customer-nbr]+':'+TRIM([Bill-street-1])+':'+ISNULL([Bill-zip],'-')+'' as "Item Id",[Customer-nbr] as "Customer",[Bill-Attention] as "Attention",
+[Bill-street-1] as "Address 1",[Bill-street-2] as "Address 2",
+[Bill-city] as "City",[Bill-state] as "State",[Bill-zip] as "Zip",[Bill-country] as "Country",
+'Active' as "Status"
+ FROM CUST WHERE [Bill-street-1] IS NOT NULL AND [Ship-street-1]<>[Bill-street-1]
+ 
+ UNION
+ SELECT [Customer-nbr]+':'+TRIM([Ship-street-1])+':'+ISNULL([Ship-zip],'-')+'' as "Item Id",[Customer-nbr] as "Customer",[Ship-Attention] as "Attention",
+ [Ship-street-1] as "Address 1",[Ship-street-2] as "Address 2",
+[Ship-city] as "City",[Ship-state] as "State",[Ship-zip] as "Zip",[Ship-country] as "Country",
+'Active' as "Status"
+ FROM CUST WHERE [Ship-street-1] IS NOT NULL
+ 
+ UNION
+ SELECT [Cust_Nbr]+':'+TRIM([Ship_To3])+':'+ISNULL(Ship_ToState,'-')+'' as "Item Id",
+ [Cust_Nbr] as "Customer",
+Ship_To1 as "Attention",[Ship_To3] as "Address 1",[Bill_To4] as "Address 2",Ship_ToCity as "Country",
+Ship_ToState as "City",Ship_ToZip as "State",Ship_To5 as "Zip",
+'Active' as "Status"
+FROM PSHEADER
+WHERE [Packing_Slip_Date]>='1/1/2022' AND [Cust_Nbr] IS NOT NULL
+AND [Ship_To3] IS NOT NULL

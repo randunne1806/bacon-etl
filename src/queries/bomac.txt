@@ -1,0 +1,7 @@
+SELECT 
+TRIM([JOB-#])+':'+TRIM(isnull([Process-Sequence], '-' COLLATE ads_default_ci))+':'+CAST([Sequence] as SQL_VARCHAR) as "Item Id",
+TRIM([JOB-#])+':'+TRIM(isnull([Process-Sequence], '-' COLLATE ads_default_ci)) as "BOM",
+Sequence,[Gate Id] as "Activity Center",[Gate Text] as "Notes 1",[Process Text] as "Notes 2",[Creation Date] as "Created At"
+ FROM TRAVDET
+WHERE [JOB-#] IN (SELECT [R-JOB#] FROM RELEASE WHERE [R-RELEASE-DATE]>='01/01/2022')
+ORDER BY TRIM([JOB-#])+':'+TRIM(isnull([Process-Sequence], '-' COLLATE ads_default_ci)),Sequence

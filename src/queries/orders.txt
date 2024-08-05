@@ -1,0 +1,15 @@
+SELECT 
+true as "Is Bacon",
+TRIM(MAX([R-PO-NBR])) as "PO Num", MIN([R-PO-DATE]) as "Order Date",COUNT(*) as "Bacon - Line Item Count",
+TRIM([H-CUST-NBR]+':'+ISNULL([R-PO-NBR],'-')) as "Order Num",
+MAX([H-CUST-NBR]) as "Customer",
+MAX([R-TERMS]) as "Terms",'Open' as "Status",TRIM(MAX([R-QUOTE-NBR])) as "Quote",
+MIN([RecordCreateDateTime]) as "Created At"
+ FROM RELEASE
+LEFT JOIN HEADER ON [R-JOB#]=[H-JOB#]
+WHERE
+ [R-DUE-DATE]>='2022-01-01'
+ GROUP BY TRIM([H-CUST-NBR]+':'+ISNULL([R-PO-NBR],'-'))
+ 
+//[R-JOB#]='0021230' 
+ //sales persons

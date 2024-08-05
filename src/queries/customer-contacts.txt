@@ -1,0 +1,4 @@
+SELECT [Customer-nbr] as "Customer",
+"Part Number"
+FROM SHIPTO 
+WHERE [Ship-to-name] is not null

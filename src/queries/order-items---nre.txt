@@ -1,0 +1,74 @@
+SELECT
+'Open' as "Status",
+true as "Is Bacon",
+[H-CUST-NBR] as "Customer",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-JOB#])+':'+TRIM([R-RELEASE-NBR]) as "Item Id",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-')) as "Order",
+1 as "Quantity",
+'TOOLING' as "Item",[R-TOOL-COST] as "Unit Price",
+[R-SHIP-VIA] as "Ship Via",[R-SHIP-ID] as "Bacon - Ship Address Index",[R-REMARKS2] as "Notes",
+[R-PO-LINE-NBR] as "PO Line Num",[RecordCreateDateTime] as "Created At",TRIM([R-QUOTE-NBR]) as "Quote",
+IIF([R-LOT-PRICE]>0,'Lot Price','Unit Price') as "Price Type",[R-TURN-TIME] as "Lead Time",
+[R-MP-STATUS] as "Bacon - MP Status",[R-PRIORITY] as "Bacon - Priority"
+FROM RELEASE
+LEFT JOIN HEADER ON [R-JOB#]=[H-JOB#]
+WHERE 
+[R-DUE-DATE]>='2022-01-01' AND [R-TOOL-COST]>0
+
+UNION
+SELECT
+'Open' as "Status",
+true as "Is Bacon",
+[H-CUST-NBR] as "Customer",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-JOB#])+':'+TRIM([R-RELEASE-NBR]) as "Item Id",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-')) as "Order",
+1 as "Quantity",
+'NRE 1' as "Item",[R-ADD-CHG] as "Unit Price",
+[R-SHIP-VIA] as "Ship Via",[R-SHIP-ID] as "Bacon - Ship Address Index",[R-REMARKS2] as "Notes",
+[R-PO-LINE-NBR] as "PO Line Num",[RecordCreateDateTime] as "Created At",TRIM([R-QUOTE-NBR]) as "Quote",
+IIF([R-LOT-PRICE]>0,'Lot Price','Unit Price') as "Price Type",[R-TURN-TIME] as "Lead Time",
+[R-MP-STATUS] as "Bacon - MP Status",[R-PRIORITY] as "Bacon - Priority"
+FROM RELEASE
+LEFT JOIN HEADER ON [R-JOB#]=[H-JOB#]
+WHERE 
+[R-DUE-DATE]>='2022-01-01' AND [R-ADD-CHG]>0
+
+
+UNION
+SELECT
+'Open' as "Status",
+true as "Is Bacon",
+[H-CUST-NBR] as "Customer",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-JOB#])+':'+TRIM([R-RELEASE-NBR]) as "Item Id",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-')) as "Order",
+1 as "Quantity",
+'NRE 2' as "Item",[R-ADD-CHG-2] as "Unit Price",
+[R-SHIP-VIA] as "Ship Via",[R-SHIP-ID] as "Bacon - Ship Address Index",[R-REMARKS2] as "Notes",
+[R-PO-LINE-NBR] as "PO Line Num",[RecordCreateDateTime] as "Created At",TRIM([R-QUOTE-NBR]) as "Quote",
+IIF([R-LOT-PRICE]>0,'Lot Price','Unit Price') as "Price Type",[R-TURN-TIME] as "Lead Time",
+[R-MP-STATUS] as "Bacon - MP Status",[R-PRIORITY] as "Bacon - Priority"
+FROM RELEASE
+LEFT JOIN HEADER ON [R-JOB#]=[H-JOB#]
+WHERE 
+[R-DUE-DATE]>='2022-01-01' AND [R-ADD-CHG-2]>0
+
+UNION
+SELECT
+'Open' as "Status",
+true as "Is Bacon",
+[H-CUST-NBR] as "Customer",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-JOB#])+':'+TRIM([R-RELEASE-NBR]) as "Item Id",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-')) as "Order",
+1 as "Quantity",
+'NRE 3' as "Item",[AddCharge3] as "Unit Price",
+[R-SHIP-VIA] as "Ship Via",[R-SHIP-ID] as "Bacon - Ship Address Index",[R-REMARKS2] as "Notes",
+[R-PO-LINE-NBR] as "PO Line Num",[RecordCreateDateTime] as "Created At",TRIM([R-QUOTE-NBR]) as "Quote",
+IIF([R-LOT-PRICE]>0,'Lot Price','Unit Price') as "Price Type",[R-TURN-TIME] as "Lead Time",
+[R-MP-STATUS] as "Bacon - MP Status",[R-PRIORITY] as "Bacon - Priority"
+FROM RELEASE
+LEFT JOIN HEADER ON [R-JOB#]=[H-JOB#]
+WHERE 
+[R-DUE-DATE]>='2022-01-01' AND [AddCharge3]>0
+
+//[R-TOOL-COST]
+// [R-ADD-CHG],[R-ADD-CHG-2],[AddCharge3],

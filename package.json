@@ -1,0 +1,25 @@
+{
+  "name": "bacon-etl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "1q": "ts-node src/index.ts 1q",
+    "debug": "ts-node src/index.ts debug",
+    "mainTask": "ts-node src/index.ts mainTask",
+    "updateAnicerTableView": "ts-node src/index.ts updateAnicerTableView",
+    "updateNonEmptyTableNames": "ts-node src/index.ts updateNonEmptyTableNames"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^20.4.8",
+    "@types/papaparse": "5.3.8",
+    "axios": "^1.4.0",
+    "compression": "^1.7.4",
+    "odbc": "^2.4.8",
+    "papaparse": "5.4.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}

@@ -1,0 +1,5 @@
+SELECT TRIM(ItemPartNbr)+':'+[VendorId] as "Item Id",UPPER(ItemPartNbr) as "Item",VendorId as "Vendor",ISNULL( Cost,0) as "Unit Price",VendorPN as "Vendor SKU",
+vendorPNDesc as "Description" FROM ITEMVEND
+WHERE ItemPartNbr IN (SELECT ItemPartNbr
+FROM ItemMast WHERE ItemPartNbr IN (SELECT ItemPartNbr FROM PODETAIL WHERE PoNbr IN (SELECT [PoNbr] FROM POHEADER WHERE [PODate]>='02/14/2022')
+ AND Qty <> 0 AND Price<>0 AND ItemPartNbr<>'')) AND VendorId<>''

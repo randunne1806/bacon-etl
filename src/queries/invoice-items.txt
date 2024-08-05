@@ -1,0 +1,22 @@
+SELECT (CAST(IDETAIL.[INVOICE/PACKING SLIP #] as SQL_VARCHAR)+':'+TRIM(IIF(IDETAIL.[Item Number] is not null,
+IDETAIL.[Item Number],IDETAIL.[Job Nbr]))+':'+CAST(IDETAIL.[LINE #] as SQL_VARCHAR)) as "Item Id",
+IDETAIL.[INVOICE/PACKING SLIP #] as "Invoice",
+IDETAIL.[LINE #] as Line,
+IIF(IDETAIL.[Item Number] is not null,IDETAIL.[Item Number],IDETAIL.[Job Nbr]) as "Item",
+IFNULL(IDETAIL.[Actual Qty],1) as "Quantity", IDETAIL.Description,ISNULL(IDETAIL.[Unit Price],0) as "Unit Price",IDETAIL.[Record-Type] as "Item Type",
+'Open' as "Status",'Item' as "Type",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-JOB#])+':'+TRIM([R-TRACKING-NBR])+'' as "Order Release",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-JOB#])+':'+TRIM([R-RELEASE-NBR]) as "Order Item",
+[H-CUST-NBR]+':'+ISNULL([R-PO-NBR],'-') as "Order",
+'' as "GL Revenue Account",
+PSDETAIL.[INVOICE/PACKING SLIP #] as "Shipment",
+(CAST(PSDETAIL.[INVOICE/PACKING SLIP #] as SQL_VARCHAR)+':'+CAST(LEFT(PSDETAIL.[Job Nbr],7) as SQL_VARCHAR)+':'+CAST(PSDETAIL.[LINE #] as SQL_VARCHAR)) as "Shipment Item",
+[Tracking-Nbr] as "Bacon - Release Num",true as "Is Bacon"
+FROM IDETAIL
+LEFT JOIN PSDETAIL ON PSDETAIL.[INVOICE/PACKING SLIP #]=IDETAIL.[INVOICE/PACKING SLIP #] AND PSDETAIL.[LINE #]=IDETAIL.[LINE #]
+LEFT JOIN RELEASE ON [R-TRACKING-NBR]=PSDETAIL.[JOB NBR]
+LEFT JOIN HEADER ON [R-JOB#]=[H-JOB#]
+WHERE IDETAIL.[INVOICE/PACKING SLIP #] IN (
+SELECT [INVOICE/PACKING SLIP #] FROM IHEADER WHERE
+[Invoice Date]>='02/14/2022'
+) AND IIF(IDETAIL.[Item Number] is not null,IDETAIL.[Item Number],IDETAIL.[Job Nbr]) is not null

@@ -1,0 +1,9 @@
+SELECT 
+[JobNbr] as "Eng Part",
+[ItemPN] as "Item",
+[QtyPerPanel] as "Quantity"
+FROM ITEMJBOM
+
+//need to add this for every BOM for the ENG PART (?)
+//only those not in CHINA OR INDIA
+//for sub assembly BOM use the materials in those as well

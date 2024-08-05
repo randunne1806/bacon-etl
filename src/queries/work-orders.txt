@@ -1,0 +1,40 @@
+SELECT 
+'' as "Parent Work Order",
+[H-CUST-NBR] as "Customer",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-TRACKING-NBR])+'' as "Work Order Num",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-JOB#])+':'+TRIM([R-TRACKING-NBR])+'' as "Order Release",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-JOB#])+':'+TRIM([R-RELEASE-NBR]) as "Order Item",
+[H-CUST-NBR]+':'+ISNULL([R-PO-NBR],'-') as "Order",ISNULL([R-PLN-QTY-BDS],0) as "Quantity",
+[R-JOB#] as "Item",
+[R-JOB#] as "Eng Part",
+TRIM([R-JOB#])+':'+TRIM(ISNULL([R-PROC-SEQ],[H-PROC-SEQ]))+'' as "BOM",[R-RELEASED-BY] as "Created By",
+[RecordCreateDateTime] as "Created At",[R-DUE-DATE] as "Due Date",'Pending' as "Status"
+FROM RELEASE
+INNER JOIN HEADER ON [R-JOB#]=[H-JOB#]
+WHERE 
+[R-DUE-DATE]>='2022-01-01' AND
+([R-STATUS]<>'RMA' OR [R-STATUS] IS NULL)
+AND [H-CUST-NBR] IS NOT NULL
+ 
+ UNION
+  SELECT 
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-TRACKING-NBR])+'' as "Parent Work Order",
+[H-CUST-NBR] as "Customer",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-TRACKING-NBR])+':'+[P-PNL-REL-NBR]+'' as "Work Order Num",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-JOB#])+':'+TRIM([R-TRACKING-NBR])+'' as "Order Release",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-JOB#])+':'+TRIM([R-RELEASE-NBR]) as "Order Item",
+[H-CUST-NBR]+':'+ISNULL([R-PO-NBR],'-') as "Order",ISNULL([R-PLN-QTY-BDS],0) as "Quantity",
+[R-JOB#] as "Item",
+[R-JOB#] as "Eng Part",
+TRIM([R-JOB#])+':'+TRIM(ISNULL([R-PROC-SEQ],[H-PROC-SEQ]))+'' as "BOM",[R-RELEASED-BY] as "Created By",
+[RecordCreateDateTime] as "Created At",[R-DUE-DATE] as "Due Date",'Pending' as "Status"
+FROM PNLREL
+LEFT JOIN RELEASE ON [R-JOB#]=[P-JOB-NBR] AND [R-RELEASE-NBR]=[P-REL-NBR]
+LEFT JOIN HEADER ON [R-JOB#]=[H-JOB#]
+WHERE
+[R-DUE-DATE]>='2022-01-01' AND
+([R-STATUS]<>'RMA' OR [R-STATUS] IS NULL)
+AND [H-CUST-NBR] IS NOT NULL
+
+ 
+ 

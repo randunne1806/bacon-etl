@@ -1,0 +1,14 @@
+SELECT DISTINCT 
+UPPER(TRIM([JOB NBR])) as "Item Code",
+[H-CUST-NBR] as "Customer",
+'Inventory Item' as "Item Type",
+'Active' as "Status",
+'Can Manf,Can Sell' as "Can Types",
+'PCB' as "Item Category",
+'' as "Revenue GL Account",
+'' as "Inventory GL Account",'' as "Unit of Measure"
+FROM HEADER 
+INNER JOIN  TRAVHEAD ON HEADER.[H-JOB#]=TRAVHEAD.[JOB NBR] AND HEADER.[H-PROC-SEQ]=TRAVHEAD.[Process-Sequence]
+ LEFT JOIN TRAVASM ON TRAVHEAD.[JOB NBR]=TRAVASM.[JOBNBR] AND TRAVHEAD.[Process-Sequence]=TRAVASM.[ProcessSequence]
+ WHERE (TRAVHEAD.[Creation Date]>='01/01/2021' OR [JOB NBR] IN (SELECT [R-JOB#] FROM RELEASE WHERE [R-DUE-DATE]>='01/01/2022'))
+  AND [H-CUST-NBR] IS NOT NULL

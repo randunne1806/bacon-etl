@@ -1,0 +1,6 @@
+SELECT TRIM(TRIM([JOB NBR])+':'+TRIM(isnull([Process-Sequence], '-' COLLATE ads_default_ci))) as "Item Id",
+TRIM([JOB NBR]) as "Eng Part",TRIM([Process-Sequence]) as "Name",[Customer ID] as "Customer",
+[Creation Date] as "Created At",'Active' as "Status" 
+FROM TRAVHEAD
+ LEFT JOIN TRAVASM ON TRAVHEAD.[JOB NBR]=TRAVASM.[JOBNBR] AND TRAVHEAD.[Process-Sequence]=TRAVASM.[ProcessSequence]
+ WHERE (TRAVHEAD.[Creation Date]>='01/01/2022' OR [JOB NBR] IN (SELECT [R-JOB#] FROM RELEASE WHERE [R-RELEASE-DATE]>='01/01/2022'))

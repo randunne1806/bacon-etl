@@ -1,0 +1,6 @@
+SELECT [Item Code],SUM([Quantity]) as "Quantity" FROM 
+(SELECT REPLACE([R-JOB#],'STK','') as "Item Code",[R-ACT-QTY-BDS] as "Quantity" FROM HISTORY
+INNER JOIN RELEASE ON HISTORY.[S-JOB#] = RELEASE.[R-TRACKING-NBR] 
+WHERE [S-GATE]='SK' AND [R-ACT-QTY-BDS] IS NOT NULL) as TT
+WHERE [Quantity]>0
+GROUP BY [Item Code]

@@ -1,0 +1,13 @@
+SELECT [Job Nbr] as "Bacon - Release Num",(CAST([INVOICE/PACKING SLIP #] as SQL_VARCHAR)+':'+CAST(LEFT(isnull([Job Nbr],'-'),7) as SQL_VARCHAR)+':'+CAST([LINE #] as SQL_VARCHAR)) as "Item Id",
+[INVOICE/PACKING SLIP #] as "Shipment",[LINE #] as Line,
+TRIM([R-JOB#]) as "Item",[Cust_Nbr] as "Customer",
+PSDETAIL.[Invoice Qty] as "Quantity",ISNULL(PSDETAIL.[Backorder Qty],0) as "Bacon - Backorder Qty",ISNULL(PSDETAIL.[Qty Due],0) as "Bacon - Qty Due",ISNULL(PSDETAIL.[Actual Qty],0) as "Bacon - Actual Qty",
+Description, [Date Created] as "Created At",'Confirmed' as "Status",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-JOB#])+':'+TRIM([R-TRACKING-NBR])+'' as "Order Release",
+[H-CUST-NBR]+':'+TRIM(ISNULL([R-PO-NBR],'-'))+':'+TRIM([R-JOB#])+':'+TRIM([R-RELEASE-NBR]) as "Order Item",
+[H-CUST-NBR]+':'+ISNULL([R-PO-NBR],'-') as "Order"
+FROM PSDETAIL
+INNER JOIN PSHEADER ON PSHEADER.[Packing Slip Nbr]=[INVOICE/PACKING SLIP #]
+LEFT JOIN RELEASE ON [R-TRACKING-NBR]=[JOB NBR]
+LEFT JOIN HEADER ON [R-JOB#]=[H-JOB#]
+WHERE PSHEADER.[Packing_Slip_Date]>='1/1/2022'

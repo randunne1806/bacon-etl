@@ -1,0 +1,17 @@
+SELECT DISTINCT 
+TRIM([JOB NBR]) as "Eng Part Num",
+TRIM([JOB NBR]) as "Item",
+[Part Number] as "Customer Part",
+[Customer ID] as "Customer",
+'Engineered' as "Status",
+[Lam-Thickness] as "Surface Finish",
+[MATL-LOT-NO] as "Material Type"
+FROM HEADER 
+INNER JOIN  TRAVHEAD ON HEADER.[H-JOB#]=TRAVHEAD.[JOB NBR] AND HEADER.[H-PROC-SEQ]=TRAVHEAD.[Process-Sequence]
+ LEFT JOIN TRAVASM ON TRAVHEAD.[JOB NBR]=TRAVASM.[JOBNBR] AND TRAVHEAD.[Process-Sequence]=TRAVASM.[ProcessSequence]
+ WHERE (TRAVHEAD.[Creation Date]>='01/01/2021' OR [JOB NBR] IN (SELECT [R-JOB#] FROM RELEASE WHERE [R-DUE-DATE]>='01/01/2022'))
+ AND [Customer ID] IS NOT NULL
+ //[Part-Size-W] as "Board Width",[Part-Size-L] as "Board Height",
+//[Array-Size-W] as "Array Width",[Array-Size-L] as "Array Height",
+
+//get all parts from Header that have been ordered or from Quotes that have been quoted

@@ -1,0 +1,4 @@
+SELECT TRIM(CAST(PoNbr as SQL_VARCHAR))+':'+CAST(LineNbr as SQL_VARCHAR)+'' as "Item Id",
+PoNbr as "Purchase Order",LineNbr as "Line", ItemPartNbr as "Item",ItemDescription as "Description",Qty as "Quantity",
+Price as "Unit Price", DeliveryDate as "Due Date", UOM as "Units", GLAccount as "Bacon Expense GL Account",'Open' as "Status"
+FROM PODETAIL WHERE PoNbr IN (SELECT [PoNbr] FROM POHEADER WHERE [PODate]>='02/14/2022') AND Qty <> 0 AND Price<>0 AND ItemPartNbr<>''
